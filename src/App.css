@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700;800&display=swap');
+
+:root {
+  --ge-green: #00b140;
+  --ge-dark: #06aa48;
+  --bg-body: #f1f2f3;
+  --text: #333;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; font-family: 'Open Sans', sans-serif; background-color: var(--bg-body); color: var(--text); }
+
+/* --- HEADER BLINDADO (Zoom e Centralização) --- */
+.ge-header { 
+  background: var(--ge-green); 
+  color: white; 
+  border-bottom: 4px solid var(--ge-dark); 
+  width: 100%; 
+  
+  /* IMPEDE QUE A BARRA CORTE: Força a largura mínima ser o conteúdo */
+  min-width: fit-content; 
+}
+
+.header-wrapper { 
+  max-width: 1200px; 
+  margin: 0 auto; 
+  padding: 10px 20px; 
+  display: flex; 
+  align-items: center;
+  height: 70px; /* Altura fixa ajuda a estabilizar */
+}
+
+/* LADO ESQUERDO (Ocupa o mesmo espaço que o direito) */
+.header-left {
+  flex: 1;
+  display: flex;
+  justify-content: flex-start;
+}
+
+/* CENTRO (Fica imprensado exatamente no meio) */
+.header-center {
+  flex: 0 0 auto; /* Não estica nem encolhe */
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* LADO DIREITO (Ocupa o mesmo espaço que o esquerdo) */
+.header-right {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Estilos dos Elementos */
+.ge-logo { 
+  font-size: 24px; font-weight: 800; display: flex; align-items: center; gap: 8px; white-space: nowrap; 
+}
+
+.student-names { 
+  font-size: 10px; font-weight: 800; opacity: 0.8; white-space: nowrap; text-align: right;
+}
+
+.league-select {
+  padding: 8px 12px; border-radius: 4px; border: none; font-weight: 700;
+  color: var(--ge-dark); background: white; cursor: pointer; outline: none;
+}
+
+.nav-menu { display: flex; gap: 10px; }
+.nav-link { 
+  display: flex; align-items: center; color: white; text-decoration: none; 
+  font-weight: 700; font-size: 14px; text-transform: uppercase; cursor: pointer;
+  padding: 8px 12px; border-radius: 4px; transition: background 0.2s; white-space: nowrap;
+}
+.nav-link:hover { background: rgba(255,255,255,0.1); }
+.nav-link.active { background: rgba(255,255,255,0.2); }
+
+/* Responsividade: Quando a tela for pequena, empilha tudo */
+@media (max-width: 900px) {
+  .header-wrapper { height: auto; flex-direction: column; gap: 15px; padding: 20px; }
+  .header-left, .header-right { flex: auto; justify-content: center; width: 100%; }
+  .header-center { flex-direction: column; width: 100%; }
+}
+
+/* --- RESTANTE DO CSS --- */
+.main-container { max-width: 1140px; margin: 25px auto; display: grid; grid-template-columns: 2fr 1fr; gap: 25px; padding: 0 20px; }
+.box { background: white; border: 1px solid #e6e6e6; border-radius: 4px; padding: 20px; margin-bottom: 20px; }
+.ge-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.ge-table th { background: #f9f9f9; color: #999; font-size: 11px; padding: 10px; text-align: left; border-bottom: 1px solid #eee; text-transform: uppercase; }
+.ge-table td { padding: 10px; border-bottom: 1px solid #f2f2f2; }
+.team-logo { width: 24px !important; height: 24px !important; object-fit: contain; }
+.pos { width: 20px; font-weight: 800; }
+.game-row { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 12px 0; border-bottom: 1px solid #eee; }
+.match-team { display: flex; flex-direction: column; align-items: center; font-size: 12px; font-weight: 700; gap: 4px; text-align: center;}
+.match-logo { width: 30px !important; height: 30px !important; object-fit: contain; }
+.racha-setup { display: flex; gap: 10px; margin-bottom: 15px; }
+.input-ge { flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 4px; }
+.btn-ge { background: var(--ge-green); color: white; border: none; padding: 10px 15px; font-weight: 700; border-radius: 4px; cursor: pointer; }
+.player-list { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 15px; }
+.player-tag { background: #eee; padding: 4px 12px; border-radius: 20px; font-size: 12px; }
+@media (max-width: 900px) { .main-container { grid-template-columns: 1fr; } }
