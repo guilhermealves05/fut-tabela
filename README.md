@@ -23,7 +23,7 @@ O projeto está organizado da seguinte forma:
 
 1.  Clone este repositório:
     ```bash
-    git clone [https://github.com/SEU-USUARIO/fut-tabela.git](https://github.com/SEU-USUARIO/fut-tabela.git)
+    git clone https://github.com/guilhermealves05/fut-tabela.git
     ```
 2.  Instale as dependências:
     ```bash
