@@ -30,16 +30,28 @@ function Layout({ children, league, setLeague }) {
           </div>
           
           <div className="header-center">
+            {/* NOVO SELETOR MODIFICADO */}
             {currentPath === '/' && (
-               <select className="league-select" value={league} onChange={(e) => setLeague(e.target.value)}>
-                 <option value="BSA">Brasileirão Série A</option>
-                 <option value="PL">Premier League (ING)</option>
-                 <option value="PD">La Liga (ESP)</option>
-                 <option value="SA">Série A (ITA)</option>
-                 <option value="BL1">Bundesliga (ALE)</option>
-                 <option value="FL1">Ligue 1 (FRA)</option>
-               </select>
+               <div className="seletor-campeonato">
+                 <label htmlFor="liga-select" className="seletor-label">
+                   Selecione o Campeonato:
+                 </label>
+                 <select 
+                   id="liga-select"
+                   className="seletor-input" 
+                   value={league} 
+                   onChange={(e) => setLeague(e.target.value)}
+                 >
+                   <option value="BSA">Brasileirão Série A</option>
+                   <option value="PL">Premier League (ING)</option>
+                   <option value="PD">La Liga (ESP)</option>
+                   <option value="SA">Série A (ITA)</option>
+                   <option value="BL1">Bundesliga (ALE)</option>
+                   <option value="FL1">Ligue 1 (FRA)</option>
+                 </select>
+               </div>
             )}
+
             <nav className="nav-menu">
               <Link to="/" className={`nav-link ${currentPath === '/' ? 'active' : ''}`}>CLASSIFICAÇÃO</Link>
               <Link to="/racha" className={`nav-link ${currentPath === '/racha' ? 'active' : ''}`}>SIMULADOR RACHA</Link>
