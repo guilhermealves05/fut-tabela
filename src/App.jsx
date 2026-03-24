@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Link, useLocation } from 'react-router-dom';
-import { Trophy, Search } from 'lucide-react'; // Importamos o ícone Search aqui
+import { Trophy, Search } from 'lucide-react';
 import { getStandings, getTeamDetails } from './services/api';
 
 import Matches from './components/Matches';
@@ -80,15 +80,16 @@ export default function App() {
   const [league, setLeague] = useState('BSA'); 
   const [selectedTeam, setSelectedTeam] = useState(null);
   const [loadingTeam, setLoadingTeam] = useState(false);
-  
-  // NOVO ESTADO: Guarda o texto da pesquisa
   const [busca, setBusca] = useState(''); 
+  
+  // NOVO ESTADO: Controle da notificação Toast
+  const [toast, setToast] = useState({ show: false, message: '' });
 
   useEffect(() => {
     const fetchLeagueData = async () => {
       setLoading(true);
       setApiError(false);
-      setBusca(''); // Limpa a busca ao trocar de campeonato
+      setBusca('');
       
       try {
         const res = await getStandings(league);
@@ -110,10 +111,26 @@ export default function App() {
     fetchLeagueData();
   }, [league]);
 
+  // NOVA LÓGICA DO FAVORITO COM TOAST
   const toggleFavorite = (id) => {
-    const n = favs.includes(id) ? favs.filter(f => f !== id) : [...favs, id];
+    const isAdding = !favs.includes(id);
+    const n = isAdding ? [...favs, id] : favs.filter(f => f !== id);
     setFavs(n); 
     localStorage.setItem('futs', JSON.stringify(n));
+
+    // Descobre o nome do time para mostrar no aviso
+    const teamName = data.find(item => item.team.id === id)?.team.shortName || 'Equipa';
+    
+    // Mostra o Toast
+    setToast({ 
+      show: true, 
+      message: isAdding ? `${teamName} adicionado aos favoritos! ⭐` : `${teamName} removido dos favoritos.` 
+    });
+
+    // Esconde o Toast depois de 3 segundos
+    setTimeout(() => {
+      setToast({ show: false, message: '' });
+    }, 3000);
   };
 
   const handleTeamClick = async (teamId) => {
@@ -126,7 +143,6 @@ export default function App() {
     setLoadingTeam(false);
   };
 
-  // NOVA LÓGICA: Filtra os dados da tabela em tempo real com base na pesquisa
   const timesFiltrados = data.filter((item) => {
     const nome = item.team.name ? item.team.name.toLowerCase() : '';
     const nomeCurto = item.team.shortName ? item.team.shortName.toLowerCase() : '';
@@ -141,7 +157,6 @@ export default function App() {
         <Routes>
           <Route path="/" element={
             <div className="main-grid">
-              
               <section className="left-col">
                 <div className="fut-card">
                   <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px', borderBottom:'2px solid var(--ge-green)', paddingBottom:'10px'}}>
@@ -157,10 +172,13 @@ export default function App() {
                   )}
 
                   {loading ? (
-                    <p style={{textAlign: 'center', padding: '20px', color: '#666'}}>A carregar tabela atualizada...</p>
+                    /* NOVO SPINNER DE CARREGAMENTO */
+                    <div className="spinner-container">
+                      <div className="loading-spinner"></div>
+                      <p>A carregar dados do campeonato...</p>
+                    </div>
                   ) : (
                     <>
-                      {/* NOVA BARRA DE PESQUISA NA INTERFACE */}
                       <div style={{ display: 'flex', alignItems: 'center', background: '#f9f9f9', padding: '10px 15px', borderRadius: '8px', border: '1px solid #e6e6e6', marginBottom: '15px', transition: 'box-shadow 0.2s' }}>
                         <Search size={18} color="#999" style={{ marginRight: '10px' }} />
                         <input 
@@ -172,7 +190,6 @@ export default function App() {
                         />
                       </div>
 
-                      {/* Tabela agora recebe os timesFiltrados */}
                       <Table 
                         data={timesFiltrados} 
                         favorites={favs} 
@@ -180,10 +197,9 @@ export default function App() {
                         onTeamClick={handleTeamClick} 
                       />
                       
-                      {/* Mensagem caso a pesquisa não encontre nada */}
                       {timesFiltrados.length === 0 && (
                         <div style={{ textAlign: 'center', padding: '30px', color: '#999', fontSize: '14px' }}>
-                          Nenhuma equipa encontrada com o nome "{busca}".
+                          Nenhuma equipe encontrada com o nome "{busca}".
                         </div>
                       )}
                     </>
@@ -208,6 +224,13 @@ export default function App() {
           } />
         </Routes>
       </Layout>
+
+      {/* NOVO TOAST DE NOTIFICAÇÃO FLUTUANTE */}
+      {toast.show && (
+        <div className="toast-notification">
+          {toast.message}
+        </div>
+      )}
     </BrowserRouter>
   );
 }
