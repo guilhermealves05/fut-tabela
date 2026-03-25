@@ -26,7 +26,7 @@ body {
   min-height: 100vh;
 }
 
-/* Centralizador de conteúdo para Desktop */
+
 .content-wrapper {
   max-width: 1400px;
   margin: 0 auto;
@@ -195,9 +195,7 @@ body {
   box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.4);
 }
 
-/* =========================================================
-   Estados de Carregamento (Spinner)
-========================================================= */
+
 .spinner-container {
   display: flex;
   flex-direction: column;
@@ -224,9 +222,7 @@ body {
   100% { transform: rotate(360deg); }
 }
 
-/* =========================================================
-   Notificações Flutuantes (Toast)
-========================================================= */
+
 .toast-notification {
   position: fixed;
   bottom: 30px;
@@ -251,4 +247,27 @@ body {
 @keyframes fadeOut {
   from { opacity: 1; }
   to { opacity: 0; visibility: hidden; }
+}
+
+
+.btn-limpar-comparacao {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f1f2f3; 
+  border: 1px solid #ccc; 
+  border-radius: 8px;
+  padding: 0 16px; 
+  cursor: pointer;
+  transition: all 0.2s;
+  height: 38px; 
+  font-weight: 600; 
+  font-size: 13px; 
+  color: #333; 
+  white-space: nowrap; 
+}
+
+.btn-limpar-comparacao:hover {
+  background-color: #e6e6e6; 
+  border-color: #999999;
 }
