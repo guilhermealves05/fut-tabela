@@ -271,3 +271,36 @@ body {
   background-color: #e6e6e6; 
   border-color: #999999;
 }
+
+
+.tabela-legenda {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #f9fafb; 
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+}
+
+.legenda-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cor-caixa {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+}
+
+.legenda-texto {
+  font-size: 12px;
+  font-weight: 600;
+  color: #4b5563;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
