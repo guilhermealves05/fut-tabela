@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Link, useLocation } from 'react-router-dom';
 import { Trophy, Search } from 'lucide-react';
 import { getStandings, getTeamDetails } from './services/api';
+import PlayerStats from './components/PlayerStats';
 
 import Matches from './components/Matches';
 import RachaSorter from './components/RachaSorter'; 
@@ -211,6 +212,7 @@ export default function App() {
 
               <aside className="right-col">
                 <StatsSummary data={data} />
+                <PlayerStats /> {/* O novo componente vai entrar aqu */}
                 <Matches league={league} />
                 <TeamDetails team={selectedTeam} loading={loadingTeam} />
               </aside>
