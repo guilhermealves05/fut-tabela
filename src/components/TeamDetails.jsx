@@ -15,7 +15,6 @@ export default function TeamDetails({ team, loading }) {
 
   return (
     <div className="box">
-      {/* CABEÇALHO DO TIME */}
       <div style={{textAlign: 'center', marginBottom: '15px', borderBottom: '1px solid #eee', paddingBottom: '15px'}}>
         <img src={team.crest} style={{width: '70px', height: '70px', objectFit: 'contain'}} alt="" />
         <h3 style={{margin: '10px 0 5px 0'}}>{team.name}</h3>
@@ -33,13 +32,11 @@ export default function TeamDetails({ team, loading }) {
         </div>
       </div>
 
-      {/* ELENCO & TÉCNICO (Somente dados reais) */}
       <h5 style={{margin: '0 0 10px 0', color: 'var(--ge-green)', display: 'flex', alignItems: 'center', gap: '5px'}}>
         <User size={14}/> ELENCO ATUAL
       </h5>
       
       <div style={{maxHeight: '350px', overflowY: 'auto', fontSize: '12px', paddingRight: '5px'}}>
-        {/* Técnico */}
         {team.coach && (
           <div style={{
             padding: '8px', 
@@ -54,7 +51,6 @@ export default function TeamDetails({ team, loading }) {
           </div>
         )}
 
-        {/* Lista de Jogadores */}
         {team.squad && team.squad.length > 0 ? (
           team.squad.map(p => (
             <div key={p.id} style={{display: 'flex', justifyContent: 'space-between', padding: '6px 0', borderBottom: '1px solid #f5f5f5'}}>

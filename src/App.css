@@ -2,8 +2,8 @@
 
 :root {
   --bg-color: #f1f2f3;
-  --header-bg: #00b140; /* ge-green */
-  --header-border: #06aa48; /* ge-dark */
+  --header-bg: #00b140; 
+  --header-border: #06aa48;
   --card-bg: #ffffff;
   --text-primary: #333333;
   --text-secondary: #666666;
@@ -35,7 +35,6 @@ body {
   box-sizing: border-box;
 }
 
-/* --- HEADER FULL WIDTH --- */
 .fut-header {
   width: 100%;
   background-color: var(--header-bg);
@@ -97,14 +96,13 @@ body {
   font-size: 11px; font-weight: 800; opacity: 0.9; text-align: right;
 }
 
-/* --- CORPO DA PÁGINA E GRID --- */
 .main-content-area {
   padding: 30px 20px;
 }
 
 .main-grid {
   display: grid;
-  grid-template-columns: 3fr 1fr; /* 75% principal (Esquerda), 25% sidebar (Direita) */
+  grid-template-columns: 3fr 1fr; 
   gap: 30px;
   align-items: start;
 }
@@ -113,7 +111,6 @@ body {
   .main-grid { grid-template-columns: 1fr; }
 }
 
-/* --- COMPONENTES GENÉRICOS --- */
 .fut-card, .box {
   background-color: var(--card-bg);
   border-radius: 8px;
@@ -123,7 +120,6 @@ body {
   margin-bottom: 20px;
 }
 
-/* Estilos de Tabela */
 .ge-table { width: 100%; border-collapse: collapse; font-size: 13px; }
 .ge-table th { background: #f9f9f9; color: #999; font-size: 11px; padding: 10px; text-align: left; border-bottom: 1px solid #eee; text-transform: uppercase; }
 .ge-table td { padding: 10px; border-bottom: 1px solid #f2f2f2; }
@@ -135,7 +131,6 @@ body {
 .match-team { display: flex; flex-direction: column; align-items: center; font-size: 12px; font-weight: 700; gap: 4px; text-align: center;}
 .match-logo { width: 30px !important; height: 30px !important; object-fit: contain; }
 
-/* Stats Summary na sidebar */
 .stats-panel { display: flex; flex-direction: column; gap: 15px; margin-bottom: 20px; }
 .stat-box { 
   background: white; border: 1px solid var(--border-color); border-radius: 8px; 
@@ -149,19 +144,13 @@ body {
 .controls-bar { display: flex; gap: 10px; margin-bottom: 15px; }
 .input-field { flex: 1; padding: 10px; border-radius: 4px; border: 1px solid #ccc; font-family: inherit; }
 
-/* =========================================================
-   Estilização do Novo Seletor de Campeonatos
-========================================================= */
 .seletor-campeonato {
   display: flex;
   align-items: center;
-  /* Aumentamos a largura para dar espaço para o branco esticar */
   width: 460px; 
-  /* Fundo verde mais claro igual ao do seu print */
   background-color: #22c55e; 
-  /* Padding: 4px (topo), 4px (direita), 4px (baixo), 20px (esquerda) */
   padding: 4px 4px 4px 20px; 
-  border-radius: 50px; /* Borda bem redonda */
+  border-radius: 50px; 
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
@@ -171,16 +160,15 @@ body {
   font-size: 14px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  white-space: nowrap; /* Não deixa o texto quebrar */
-  margin-right: 10px; /* Dá um espacinho antes de começar o branco */
+  white-space: nowrap; 
+  margin-right: 10px; 
 }
 
 .seletor-input {
-  /* MÁGICA: flex: 1 e width: 100% forçam ele a ir até o final da direita */
   flex: 1; 
   width: 100%;
   padding: 10px 15px;
-  border-radius: 40px; /* Borda redonda acompanhando o verde de fora */
+  border-radius: 40px; 
   border: none;
   font-weight: 800;
   color: var(--ge-green);
@@ -211,7 +199,7 @@ body {
   width: 40px;
   height: 40px;
   border: 4px solid #f3f3f3;
-  border-top: 4px solid var(--ge-green); /* Usa a cor verde do projeto */
+  border-top: 4px solid var(--ge-green);
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin-bottom: 15px;

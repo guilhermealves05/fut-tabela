@@ -5,27 +5,36 @@ import { CalendarClock, ChevronDown, ChevronUp } from 'lucide-react';
 export default function Matches({ league }) {
   const [games, setGames] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [showAll, setShowAll] = useState(false); // Controla se mostra tudo ou só o resumo
+  const [showAll, setShowAll] = useState(false);
 
   useEffect(() => {
-    setLoading(true);
-    getMatches(league) 
-      .then(res => setGames(res))
-      .catch(() => setGames([]))
-      .finally(() => setLoading(false));
+    let ignore = false;
+
+    const fetchMatches = async () => {
+      
+      try {
+        const res = await getMatches(league);
+        if (!ignore) setGames(res || []);
+      } catch {
+        if (!ignore) setGames([]);
+      } finally {
+        if (!ignore) setLoading(false);
+      }
+    };
+
+    fetchMatches();
+
+    return () => { ignore = true; };
   }, [league]);
 
-  // Função para formatar data e hora corretamente para o Brasil
   const formatDate = (dateString) => {
     const d = new Date(dateString);
-    // Ex: "SÁB 18/05 • 16:00"
     const week = d.toLocaleDateString('pt-BR', { weekday: 'short' }).replace('.','').toUpperCase();
     const date = d.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' });
     const time = d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
     return `${week} ${date} • ${time}`;
   };
 
-  // Lógica para agrupar jogos por rodada (Matchday)
   const gamesByRound = games.reduce((acc, game) => {
     const round = game.matchday || 'Jogos Adiados/Extras';
     if (!acc[round]) acc[round] = [];
@@ -33,7 +42,6 @@ export default function Matches({ league }) {
     return acc;
   }, {});
 
-  // Pega os números das rodadas ordenados
   const roundKeys = Object.keys(gamesByRound).sort((a,b) => a - b);
 
   return (
@@ -52,12 +60,10 @@ export default function Matches({ league }) {
       ) : (
         <div style={{maxHeight: showAll ? '500px' : 'auto', overflowY: showAll ? 'auto' : 'visible'}}>
           
-          {/* VISÃO RESUMIDA (3 primeiros jogos) */}
           {!showAll && games.slice(0, 3).map((g) => (
             <GameRow key={g.id} game={g} formatDate={formatDate} />
           ))}
 
-          {/* VISÃO COMPLETA (Separada por Rodadas) */}
           {showAll && roundKeys.map(round => (
             <div key={round}>
               <div style={{background: '#eef', padding: '5px 10px', fontSize: '10px', fontWeight: 'bold', color: '#4285f4', borderTop: '1px solid #ddd', borderBottom: '1px solid #ddd'}}>
@@ -72,7 +78,6 @@ export default function Matches({ league }) {
         </div>
       )}
 
-      {/* Botão de Toggle */}
       {games.length > 3 && (
         <div 
           onClick={() => setShowAll(!showAll)}
@@ -94,7 +99,6 @@ export default function Matches({ league }) {
   );
 }
 
-// Sub-componente para evitar repetição de código
 function GameRow({ game, formatDate }) {
   return (
     <div className="game-row" style={{padding: '12px 15px', borderBottom: '1px solid #f5f5f5'}}>

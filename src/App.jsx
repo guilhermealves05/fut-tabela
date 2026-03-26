@@ -83,7 +83,6 @@ export default function App() {
   const [loadingTeam, setLoadingTeam] = useState(false);
   const [busca, setBusca] = useState(''); 
   
-  // NOVO ESTADO: Controle da notificação Toast
   const [toast, setToast] = useState({ show: false, message: '' });
 
   useEffect(() => {
@@ -112,23 +111,19 @@ export default function App() {
     fetchLeagueData();
   }, [league]);
 
-  // NOVA LÓGICA DO FAVORITO COM TOAST
   const toggleFavorite = (id) => {
     const isAdding = !favs.includes(id);
     const n = isAdding ? [...favs, id] : favs.filter(f => f !== id);
     setFavs(n); 
     localStorage.setItem('futs', JSON.stringify(n));
 
-    // Descobre o nome do time para mostrar no aviso
     const teamName = data.find(item => item.team.id === id)?.team.shortName || 'Equipa';
     
-    // Mostra o Toast
     setToast({ 
       show: true, 
       message: isAdding ? `${teamName} adicionado aos favoritos! ⭐` : `${teamName} removido dos favoritos.` 
     });
 
-    // Esconde o Toast depois de 3 segundos
     setTimeout(() => {
       setToast({ show: false, message: '' });
     }, 3000);
@@ -173,7 +168,6 @@ export default function App() {
                   )}
 
                   {loading ? (
-                    /* NOVO SPINNER DE CARREGAMENTO */
                     <div className="spinner-container">
                       <div className="loading-spinner"></div>
                       <p>A carregar dados do campeonato...</p>
@@ -212,8 +206,7 @@ export default function App() {
 
               <aside className="right-col">
                 <StatsSummary data={data} />
-                <PlayerStats /> {/* O novo componente vai entrar aqu */}
-                <Matches league={league} />
+                <PlayerStats league={league} />                <Matches league={league} />
                 <TeamDetails team={selectedTeam} loading={loadingTeam} />
               </aside>
             </div>
@@ -227,7 +220,6 @@ export default function App() {
         </Routes>
       </Layout>
 
-      {/* NOVO TOAST DE NOTIFICAÇÃO FLUTUANTE */}
       {toast.show && (
         <div className="toast-notification">
           {toast.message}
