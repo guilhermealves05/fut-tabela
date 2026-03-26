@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Link, useLocation } from 'react-router-dom';
 import { Trophy, Search } from 'lucide-react';
-import { getStandings, getTeamDetails } from './services/api';
+import { getStandings } from './services/api'; 
 import PlayerStats from './components/PlayerStats';
 
 import Matches from './components/Matches';
@@ -79,8 +79,6 @@ export default function App() {
   const [apiError, setApiError] = useState(false); 
   const [favs, setFavs] = useState(() => JSON.parse(localStorage.getItem('futs')) || []);
   const [league, setLeague] = useState('BSA'); 
-  const [selectedTeam, setSelectedTeam] = useState(null);
-  const [loadingTeam, setLoadingTeam] = useState(false);
   const [busca, setBusca] = useState(''); 
   
   const [toast, setToast] = useState({ show: false, message: '' });
@@ -129,16 +127,6 @@ export default function App() {
     }, 3000);
   };
 
-  const handleTeamClick = async (teamId) => {
-    setLoadingTeam(true);
-    const basicInfo = data.find(item => item.team.id === teamId)?.team;
-    if (basicInfo) setSelectedTeam(basicInfo);
-
-    const details = await getTeamDetails(teamId);
-    if (details) setSelectedTeam(details);
-    setLoadingTeam(false);
-  };
-
   const timesFiltrados = data.filter((item) => {
     const nome = item.team.name ? item.team.name.toLowerCase() : '';
     const nomeCurto = item.team.shortName ? item.team.shortName.toLowerCase() : '';
@@ -151,6 +139,7 @@ export default function App() {
     <BrowserRouter>
       <Layout league={league} setLeague={setLeague}>
         <Routes>
+          
           <Route path="/" element={
             <div className="main-grid">
               <section className="left-col">
@@ -189,7 +178,6 @@ export default function App() {
                         data={timesFiltrados} 
                         favorites={favs} 
                         onToggleFavorite={toggleFavorite}
-                        onTeamClick={handleTeamClick} 
                       />
                       
                       {timesFiltrados.length === 0 && (
@@ -206,8 +194,8 @@ export default function App() {
 
               <aside className="right-col">
                 <StatsSummary data={data} />
-                <PlayerStats league={league} />                <Matches league={league} />
-                <TeamDetails team={selectedTeam} loading={loadingTeam} />
+                <PlayerStats league={league} />                
+                <Matches league={league} />
               </aside>
             </div>
           } />
@@ -217,6 +205,11 @@ export default function App() {
                <RachaSorter />
             </div>
           } />
+
+          <Route path="/time/:id" element={
+            <TeamDetails />
+          } />
+
         </Routes>
       </Layout>
 

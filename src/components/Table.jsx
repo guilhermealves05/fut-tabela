@@ -1,11 +1,12 @@
 import React from 'react';
 import { Star } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
-export default function Table({ data, favorites, onToggleFavorite, onTeamClick }) {
-  
+export default function Table({ data, favorites, onToggleFavorite }) {
+  const navigate = useNavigate();
   
   const getZoneColor = (pos) => {
-    if (pos <= 4) return '#22c55e';
+    if (pos <= 4) return '#22c55e'; 
     if (pos <= 6) return '#3b82f6'; 
     if (pos >= 7 && pos <= 12) return '#f59e0b'; 
     if (data.length >= 20 && pos >= 17) return '#ef4444'; 
@@ -13,7 +14,7 @@ export default function Table({ data, favorites, onToggleFavorite, onTeamClick }
     return 'transparent'; 
   };
 
-return (
+  return (
     <div className="table-container">
       <table className="ge-table" style={{ width: '100%', borderCollapse: 'collapse' }}>
         <thead>
@@ -46,7 +47,7 @@ return (
                   {pos}
                 </td>
                 
-                <td style={{ textAlign: 'left', cursor: 'pointer' }} onClick={() => onTeamClick(item.team.id)}>
+                <td style={{ textAlign: 'left', cursor: 'pointer' }} onClick={() => navigate(`/time/${item.team.id}`)}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                     <img src={item.team.crest} alt={item.team.shortName} width="24" height="24" />
                     <span style={{ fontWeight: '600' }}>{item.team.shortName}</span>
@@ -81,6 +82,22 @@ return (
       </table>
 
       <div className="tabela-legenda">
+        <div className="legenda-item">
+          <span className="cor-caixa" style={{ backgroundColor: '#22c55e' }}></span>
+          <span className="legenda-texto">Fase de Grupos (Libertadores/Champions)</span>
+        </div>
+        <div className="legenda-item">
+          <span className="cor-caixa" style={{ backgroundColor: '#3b82f6' }}></span>
+          <span className="legenda-texto">Pré-Fase de Grupos</span>
+        </div>
+        <div className="legenda-item">
+          <span className="cor-caixa" style={{ backgroundColor: '#f59e0b' }}></span>
+          <span className="legenda-texto">Sul-Americana/Europa League</span>
+        </div>
+        <div className="legenda-item">
+          <span className="cor-caixa" style={{ backgroundColor: '#ef4444' }}></span>
+          <span className="legenda-texto">Rebaixamento</span>
+        </div>
       </div>
     </div>
   );
